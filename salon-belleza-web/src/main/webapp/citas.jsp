@@ -1,13 +1,17 @@
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gestión de Citas - Salón de Belleza</title>
 
     <style>
+        /* Estilos generales de la página */
         body {
             font-family: Arial, sans-serif;
             background-color: #fceef3;
@@ -15,6 +19,7 @@
             padding: 30px;
         }
 
+        /* Contenedor principal */
         .contenedor {
             max-width: 650px;
             margin: auto;
@@ -29,6 +34,7 @@
             text-align: center;
         }
 
+        /* Campos del formulario */
         label {
             display: block;
             margin-top: 15px;
@@ -44,6 +50,7 @@
             border-radius: 6px;
         }
 
+        /* Boton de registro */
         button {
             width: 100%;
             margin-top: 22px;
@@ -60,6 +67,7 @@
             background-color: #92365e;
         }
 
+        /* Presentacion de las citas */
         .cita {
             background: #fff1f6;
             padding: 12px;
@@ -76,13 +84,15 @@
     <h1>Salón de Belleza</h1>
     <h2>Agendar una cita</h2>
 
+    <!-- Formulario para registrar una cita -->
     <form action="${pageContext.request.contextPath}/citas" method="post">
 
-        <label>Nombre del cliente:</label>
-        <input type="text" name="nombre" required>
+        <label for="nombre">Nombre del cliente:</label>
+        <input type="text" id="nombre" name="nombre"
+               maxlength="100" required>
 
-        <label>Servicio:</label>
-        <select name="servicio" required>
+        <label for="servicio">Servicio:</label>
+        <select id="servicio" name="servicio" required>
             <option value="">Seleccione un servicio</option>
             <option value="Corte de cabello">Corte de cabello</option>
             <option value="Manicure">Manicure</option>
@@ -91,22 +101,25 @@
             <option value="Tinte">Tinte</option>
         </select>
 
-        <label>Fecha:</label>
-        <input type="date" name="fecha" required>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
 
-        <label>Hora:</label>
-        <input type="time" name="hora" required>
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora" required>
 
         <button type="submit">Registrar cita</button>
 
     </form>
 
+    <!-- Seccion donde aparecen las citas registradas -->
     <h2>Citas registradas</h2>
 
     <%
-        java.util.List<String> citas =
-            (java.util.List<String>) request.getAttribute("citas");
+        // Recuperar la lista enviada por el Servlet.
+        List<String> citas =
+            (List<String>) request.getAttribute("citas");
 
+        // Comprobar si existen citas registradas.
         if (citas != null && !citas.isEmpty()) {
             for (String cita : citas) {
     %>
